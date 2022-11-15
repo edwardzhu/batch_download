@@ -13,14 +13,15 @@ async def download(url: str, filename: str, headers: Dict[str, str] = None):
 
     async with aiofiles.open(filename, 'wb') as f:
         async with aiohttp.ClientSession() as session:
-            async with session.get(url, headers=headers) as resp:
+            async with session.get(url, headers=headers, timeout=None) as resp:
                 content_length = int(resp.headers["Content-Length"])
                 downloaded = 0
                 async for data, _ in resp.content.iter_chunks():
                     downloaded += len(data)
                     await f.write(data)
-                    print(f"{downloaded} / {content_length} is downloaded")
+                    print(f"{downloaded} / {content_length} downloaded")
         await f.flush()
+    print(f"{filename} has been downloaded.")
 
 
 async def parse_input(filename: str, headers: Dict[str, str] = None, output: str = "."):

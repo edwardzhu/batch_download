@@ -6,5 +6,6 @@ ENV OUTPUT_DIR .
 
 COPY . .
 RUN pip install -r requirements.txt
+VOLUME /data
 
 ENTRYPOINT ["python", "main.py"]
